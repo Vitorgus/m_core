@@ -4,6 +4,8 @@ const token = process.env.TOKEN;       //Gets the SUPER SECRET BOT TOKEN from th
 const Enmap = require('enmap');                     //Gets the enmap. Basically a simple database
 const reply = require('./msg_reply.json');
 const r_reply = require('./random_reply.json');
+const get_it = require('./get_it.json');
+const love = require('./love.json');
 
 //Initializing bot
 const bot = new Commando.Client({
@@ -12,6 +14,8 @@ const bot = new Commando.Client({
     disableEveryone: true,          // Allows the bot to use @everyone and @here
     unknownCommandResponse: false   // Disable the default unknown command response, So that it can reply with a random custom emoji later on the code
 });
+
+// TODO ttps://support.glitch.com/t/running-out-of-space-installing-ffmpeg-installer-ffmpeg/718
 
 /*
 Code that will be executed when the bot is initialized.
@@ -57,9 +61,14 @@ bot.on('message', message => {
     console.log("Cooldown refreshed!");
 
     if (message.content.startsWith(bot.commandPrefix)) return;
-
+    if (/you get it/gi.test(message.content)) {
+        return message.channel.send(get_it[Math.floor(Math.random() * get_it.length)]);
+    }
+    if (/I love you/gi.test(message.content)) {
+        return message.channel.send(love[Math.floor(Math.random() * love.length)]);
+    }
     if (Math.random() <= 0.5) {
-        message.channel.send(reply[Math.floor(Math.random() * reply.length)]);
+        return message.channel.send(reply[Math.floor(Math.random() * reply.length)]);
     }
 });
 
