@@ -68,7 +68,7 @@ bot.on('message', message => {
         setRandomReply(message);
     }
     if (reply.timed_function) clearTimeout(reply.timed_function);
-    reply.timed_function = setTimeout(noReply,bind(null, message.guild.id), 600000);
+    reply.timed_function = setTimeout(noReply.bind(null, message.guild.id), 600000);
     console.log("Cooldown refreshed!");
 
     if (message.content.startsWith(bot.commandPrefix)) return;
