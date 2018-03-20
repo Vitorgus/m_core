@@ -27,8 +27,11 @@ bot.on('ready', () => {
     bot.user.setStatus("online");                                       // Sets bot status
     //bot.user.setGame("JARVIS | jarvis help");
     bot.music = {};
+    bot.reply = {};
+    /*
     bot.timed_function = null;
     bot.random_reply = false;
+    */
     console.log("Logged in!");
 });
 
@@ -49,18 +52,27 @@ bot.on('message', message => {
     if (message.content == "alo") {
         message.channel.send("<@291235973717688321><:red:362768065202618369>");
     }*/
-    if (message.author.bot) return;
+    if (!bot.reply[message.guild.id])
+        bot.reply[message.guild.id] = {
+            timed_function: null,
+            random_reply: false
+        };
 
-    if (!bot.random_reply) {
-        bot.random_reply = true;
+    if (message.author.bot) return;
+    
+    let reply = bot.reply[message.guild.id];
+
+    if (!reply.random_reply) {
+        reply.random_reply = true;
         console.log("Started replying!");
         setRandomReply(message);
     }
-    if (bot.timed_function) clearTimeout(bot.timed_function);
-    bot.timed_function = setTimeout(noReply, 600000); //600000
+    if (reply.timed_function) clearTimeout(reply.timed_function);
+    reply.timed_function = setTimeout(noReply,bind(null, message.guild.id), 600000);
     console.log("Cooldown refreshed!");
 
     if (message.content.startsWith(bot.commandPrefix)) return;
+
     if (/you get it/gi.test(message.content)) {
         return message.channel.send(get_it[Math.floor(Math.random() * get_it.length)]);
     }
@@ -79,18 +91,18 @@ function setRandomReply(msg) {
 }
 
 function randomReply(msg) {
-    if (!bot.random_reply) {
+    if (!bot.reply[msg.guild.id].random_reply) {
         console.log("Reply blocked!");
         return;
     }
-    console.log("Just replied!");
     msg.channel.send(r_reply[Math.floor(Math.random() * r_reply.length)]);
+    console.log("Just replied!");
     setRandomReply(msg);
 }
 
-function noReply() {
-    bot.random_reply = false;
-    bot.timed_function = null;
+function noReply(id) {
+    bot.reply[id].random_reply = false;
+    bot.reply[id].timed_function = null;
     console.log("No more replies!");
 }
 
