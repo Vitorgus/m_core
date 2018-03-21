@@ -77,35 +77,38 @@ bot.on('message', message => {
 
     if (/you get it/gi.test(message.content)) {
         return message.channel.send(get_it[Math.floor(Math.random() * get_it.length)]);
+        console.log("I got it!");
     }
     if (/I love you/gi.test(message.content)) {
         return message.channel.send(love[Math.floor(Math.random() * love.length)]);
+        console.log("Sending love!");
     }
     if (Math.random() <= 0.5) {
         return message.channel.send(reply[Math.floor(Math.random() * reply.length)]);
+        console.log("Said something!");
     }
 });
 
 function setRandomReply(msg) {
     let rand = Math.trunc((Math.random() * 300000) + 120000);
     setTimeout(randomReply.bind(null, msg), rand);
-    console.log("Random reply in " + rand + " milissecs!");
+    console.log("Random message in " + rand + " milissecs!");
 }
 
 function randomReply(msg) {
     if (!bot.reply[msg.guild.id].random_reply) {
-        console.log("Reply blocked!");
+        console.log("Message blocked!");
         return;
     }
     msg.channel.send(r_reply[Math.floor(Math.random() * r_reply.length)]);
-    console.log("Just replied!");
+    console.log("Just said something random!");
     setRandomReply(msg);
 }
 
 function noReply(id) {
     bot.reply[id].random_reply = false;
     bot.reply[id].timed_function = null;
-    console.log("No more replies!");
+    console.log("No more randomness!");
 }
 
 const http = require('http');
