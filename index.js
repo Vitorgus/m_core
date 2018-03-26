@@ -54,6 +54,8 @@ bot.on('message', message => {
     if (message.content == "alo") {
         message.channel.send("<@291235973717688321><:red:362768065202618369>");
     }*/
+    if (message.guild.id === process.env.TEST_CHAT) return;
+
     if (!bot.reply[message.guild.id])
         bot.reply[message.guild.id] = {
             timed_function: null,
