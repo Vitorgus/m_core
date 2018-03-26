@@ -21,6 +21,5 @@ module.exports = class sayCommand extends Command {
         return this.client.guilds.get(process.env.MAD_CHAT)
             .channels.get(process.env.MAD_CHANNEL)
             .send(text);
-        //return msg.say(text);
     }
 };
