@@ -16,10 +16,12 @@ module.exports = class sayCommand extends Command {
         });
     }
 
-    run(msg, { text }) {
+    run(msg, { channel, text }) {
+        return msg.say(`Result: ${channel} - ${text}`);
+        /*
         if (msg.author.id !== process.env.MAD) return;
         return this.client.guilds.get(process.env.MAD_CHAT)
             .channels.get(process.env.MAD_CHANNEL)
-            .send(text);
+            .send(text);*/
     }
 };
