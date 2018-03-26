@@ -24,8 +24,8 @@ Code that will be executed when the bot is initialized.
 It mostly just set some things and logs that the bot is online
 */
 bot.on('ready', () => {
-    package = require('./package.json');                                // Gets the package.json file
-    console.log(`Starting ${package.name} v${package.version}...`);     // Outputs in the log that the bot has started
+    let pkg = require('./package.json');                                // Gets the package.json file
+    console.log(`Starting ${pkg.name} v${pkg.version}...`);     // Outputs in the log that the bot has started
     bot.user.setStatus("online");                                       // Sets bot status
     //bot.user.setGame("JARVIS | jarvis help");
     bot.music = {};
