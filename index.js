@@ -3,7 +3,6 @@ const Commando = require('discord.js-commando');    //Gets the commando library
 const token = process.env.TOKEN;       //Gets the SUPER SECRET BOT TOKEN from the hosting enviroment
 const Enmap = require('enmap');                     //Gets the enmap. Basically a simple database
 const replies = require('./replies.json');
-console.log(replies);
 const reply = replies.default; //require('./msg_reply.json');
 const r_reply = replies.random; //require('./random_reply.json');
 const get_it = replies.get_it; //require('./get_it.json');
