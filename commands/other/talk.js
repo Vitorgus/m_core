@@ -25,7 +25,7 @@ module.exports = class sayCommand extends Command {
     }
 
     run(msg, { channel, text }) {
-        if (msg.author.id !== process.env.MAD) return;
+        if (!bot.status || msg.author.id !== process.env.MAD) return;
         let ch = this.client.guilds.get(process.env.MAD_CHAT)
             .channels.get(channel);
         if (!ch) return msg.say(`Coudn't find channel ${channel} in the server!`)

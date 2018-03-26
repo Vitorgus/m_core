@@ -12,6 +12,7 @@ module.exports = class myidCommand extends Command {
     }
 
     run(msg, args) {
-      return msg.say(msg.author.id);
+        if (!bot.status) return;
+        return msg.say(msg.author.id);
     }
 };

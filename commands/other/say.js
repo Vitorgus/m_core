@@ -5,25 +5,25 @@ module.exports = class sayCommand extends Command {
         super(client, {
             name: 'say',
             aliases: [
-              'copycat',
-              'repeat',
-              'echo',
-              'parrot'
+                'copycat',
+                'repeat',
+                'echo',
+                'parrot'
             ],
             group: 'other',
             memberName: 'say',
             description: 'bot says message that the sender tells it to',
             examples: [';say'],
             args: [{
-              key: 'text',
-              prompt: 'What do you want JARVIS to say?',
-              type: 'string'
+                key: 'text',
+                prompt: 'What do you want JARVIS to say?',
+                type: 'string'
             }]
         });
     }
 
-    run(msg, args) {
-      const { text } = args;
-      return msg.say(text);
-    }
+        run(msg, { text }) {
+            if (!bot.status) return;
+            return msg.say(text);
+        }
 };
