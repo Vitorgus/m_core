@@ -8,11 +8,19 @@ module.exports = class sayCommand extends Command {
             memberName: 'talk',
             description: 'Mcore says the message in the specified server channel',
             examples: ['mcore talk Hi there!'],
-            args: [{
-                key: 'text',
-                prompt: 'What do you want M_CORE to say on the server?',
-                type: 'string'
-            }]
+            args: [
+                {
+                    key: 'channel',
+                    prompt: 'Which channel do you want to send the message to?',
+                    type: 'string'
+                },
+                {
+                    key: 'text',
+                    prompt: 'What do you want M_CORE to say on the server?',
+                    type: 'string'
+                }
+
+            ]
         });
     }
 
