@@ -19,16 +19,16 @@ module.exports = class sayCommand extends Command {
     run(msg, { state }) {
         if (msg.author.id !== process.env.MAD && !this.client.isOwner(msg.author)) return;
         if (state === "on") {
-            if (this.client.status === true)
+            if (this.client.online === true)
                 return msg.say("But I'm already turned on 😏");
-            this.client.status = true;
+            this.client.online = true;
             this.client.user.setStatus("online");
             return msg.say("I'm now online!");
         }
         if (state === "off") {
-            if (this.client.status === false)
+            if (this.client.online === false)
                 return msg.say("Dude... I'm already offline...");
-            this.client.status = false;
+            this.client.online = false;
             this.client.user.setStatus("idle");
             return msg.say("I'm now offline!");
         }
