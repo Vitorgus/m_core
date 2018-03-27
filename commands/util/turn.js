@@ -17,7 +17,7 @@ module.exports = class sayCommand extends Command {
     }
 
     run(msg, { state }) {
-        if (msg.author.id !== process.env.MAD) return;
+        if (msg.author.id !== process.env.MAD || !this.client.isOwner(msg.author)) return;
         if (state === "on") {
             if (this.client.status === true)
                 return msg.say("But I'm already turned on 😏");

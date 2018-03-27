@@ -19,7 +19,7 @@ module.exports = class urbanCommand extends Command {
     }
 
     run(msg, { text }) {
-        if (!bot.status) return;
+        if (!bot.online) return;
         var targetWord = text == "" ? urban.random() : urban(text);
         targetWord.first(function(json) {
             if (json) {

@@ -17,7 +17,7 @@ module.exports = class useridCommand extends Command {
     }
 
     run(msg, { user }) {
-        if (!bot.status) return;
+        if (!bot.online) return;
         msg.channel.send( "The id of " + user.username + " is " + user.id);
     }
 };

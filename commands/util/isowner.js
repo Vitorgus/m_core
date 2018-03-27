@@ -12,7 +12,7 @@ module.exports = class isownerCommand extends Command {
     }
 
     run(msg) {
-        if (!bot.status) return;
+        if (!bot.online) return;
         var bool = this.client.isOwner(msg.author);
         if (bool)
             return msg.say("Hello, Vitorgus! You are my owner!");

@@ -13,7 +13,7 @@ module.exports = class stopCommand extends Command {
     }
 
     run(msg, args) {
-        if (!bot.status) return;
+        if (!bot.online) return;
         let music = this.client.music[msg.guild.id] ;
         if(!msg.guild.voiceConnection) return msg.say("I'm not connected to a Voice Channel!");
         if (!music || !music.playing) return msg.say("No music is playing!");

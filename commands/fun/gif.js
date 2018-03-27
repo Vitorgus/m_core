@@ -62,7 +62,7 @@ module.exports = class gifCommand extends Command {
     }
 
     run(msg, args) {
-        if (!bot.status) return;
+        if (!bot.online) return;
         const { tags } = args;
         var tags1 = tags.split(" ");
         get_gif(tags1, function(id) {

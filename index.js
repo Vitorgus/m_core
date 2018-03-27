@@ -29,7 +29,7 @@ bot.on('ready', () => {
     //bot.user.setGame("JARVIS | jarvis help");
     bot.music = {};
     bot.reply = {};
-    bot.status = false;
+    bot.online = false;
     /*
     bot.timed_function = null;
     bot.random_reply = false;
@@ -38,7 +38,7 @@ bot.on('ready', () => {
 });
 
 bot.on('unknownCommand', message => {
-    if (!bot.status) return;
+    if (!bot.online) return;
     if (message.guild && message.guild.available && message.guild.emojis.size){
         emoji = message.guild.emojis.random();      // Gets a random custom emoji
         message.say(emoji.toString());              // Says the emoji in the chat
@@ -55,7 +55,7 @@ bot.on('message', message => {
     if (message.content == "alo") {
         message.channel.send("<@291235973717688321><:red:362768065202618369>");
     }*/
-    if (!bot.status || message.guild.id === process.env.TEST_CHAT) return;
+    if (!bot.online || message.guild.id === process.env.TEST_CHAT) return;
 
     if (!bot.reply[message.guild.id])
         bot.reply[message.guild.id] = {
