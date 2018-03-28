@@ -19,7 +19,7 @@ module.exports = class leetCommand extends Command {
     }
 
     run(msg, { text }) {
-        if (!bot.online) return;
+        if (!this.client.online) return;
         return msg.say( leet.convert(text));
     }
 };

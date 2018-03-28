@@ -17,7 +17,7 @@ module.exports = class twitchCommand extends Command {
     }
 
     run(msg, { text }) {
-        if (!bot.online) return;
+        if (!this.client.online) return;
 
         require("request")("https://api.twitch.tv/kraken/streams/"+text,
         function(err,res,body){

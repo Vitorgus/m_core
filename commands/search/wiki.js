@@ -17,7 +17,7 @@ module.exports = class wikiCommand extends Command {
     }
 
     run(msg, { text }) {
-        if (!bot.online) return;
+        if (!this.client.online) return;
 
         var query = text;
         var Wiki = require("wikijs").default;

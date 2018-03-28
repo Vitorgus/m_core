@@ -22,7 +22,7 @@ module.exports = class youtubeCommand extends Command {
     }
 
     run(msg, args) {
-        if (!bot.online) return;
+        if (!this.client.online) return;
         const { tags } = args;
         youtube.search(tags, 1, function(error, result) {
             if (error) {

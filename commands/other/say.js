@@ -23,7 +23,7 @@ module.exports = class sayCommand extends Command {
     }
 
         run(msg, { text }) {
-            if (!bot.online) return;
+            if (!this.client.online) return;
             return msg.say(text);
         }
 };

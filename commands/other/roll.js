@@ -17,7 +17,7 @@ module.exports = class rollCommand extends Command {
     }
 
     run(msg, { num }) {
-        if (!bot.online) return;
+        if (!this.client.online) return;
         var result = Math.floor((Math.random() * num));
         return msg.say(msg.author + " rolled a " + result);
     }

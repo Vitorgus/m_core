@@ -12,7 +12,7 @@ module.exports = class myidCommand extends Command {
     }
 
     run(msg, args) {
-        if (!bot.online) return;
+        if (!this.client.online) return;
         return msg.say(msg.author.id);
     }
 };

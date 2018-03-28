@@ -32,7 +32,7 @@ module.exports = class playCommand extends Command {
     }
 
     async run(msg, { url }) {
-        if (!bot.online) return;
+        if (!this.client.online) return;
 
         const anchor = this;
         let music = this.client.music; //const?

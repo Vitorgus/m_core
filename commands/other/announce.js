@@ -17,7 +17,7 @@ module.exports = class announceCommand extends Command {
     }
 
     run(msg, { text }) {
-        if (!bot.online) return;
+        if (!this.client.online) return;
         msg.say(text,{tts:true});
     }
 };

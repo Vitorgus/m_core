@@ -13,7 +13,7 @@ module.exports = class yesnoCommand extends Command {
     }
 
     run(msg, args) {
-        if (!bot.online) return;
+        if (!this.client.online) return;
         superagent
         .get('https://yesno.wtf/api')
         .end(function(err, res){
