@@ -10,13 +10,8 @@ module.exports = class sayCommand extends Command {
             examples: ['mcore talk main-chat Hi there!'],
             args: [
                 {
-                    key: 'channel',
-                    prompt: 'Which channel do you want to send the message to?',
-                    type: 'string'
-                },
-                {
                     key: 'text',
-                    prompt: 'What do you want M_CORE to say on the server?',
+                    prompt: 'Wich server?/Wich channel?/What to say?',
                     type: 'string'
                 }
 
@@ -24,11 +19,17 @@ module.exports = class sayCommand extends Command {
         });
     }
 
-    run(msg, { channel, text }) {
-        if (!this.client.online || msg.author.id !== process.env.MAD) return;
-        let ch = this.client.guilds.get(process.env.MAD_CHAT)
-            .channels.get(channel);
-        if (!ch) return msg.say(`Coudn't find channel ${channel} in the server!`)
-            return ch.send(text);
+    run(msg, { text }) {
+        if (!this.client.online || msg.author.id !== process.env.MAD || !this.client.isOwner(msg.author)) return;
+        list = text.split('/');
+        if (list.length != 3) return msg.say("There's something wrong. Make sure that thecommand argument is in the format guild/channel/text");
+        for (i in list) {
+            list[i] = list[i].replace(/(^\s+|\s+$)/g,'');
+        }
+        let guild = this.client.guilds.get(list[0]);
+        if (!guild) return msg.say(`Could not find specified guild \´${guild}\´`);
+        let ch = guild.channels.get(list[1]);
+        if (!ch) return msg.say(`Coudn't find channel speficied channel \´${ch}\´ in the guild \´${guild}\´`);
+        return ch.send(list[2]);
     }
 };
