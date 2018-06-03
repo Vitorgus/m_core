@@ -23,7 +23,7 @@ module.exports = class sayCommand extends Command {
         if (!this.client.online || (msg.author.id !== process.env.MAD && !this.client.isOwner(msg.author))) return;
         let list = text.split('/');
         if (list.length != 3) return msg.say("There's something wrong. Make sure that the command argument is in the format guild/channel/text");
-        for (i in list) {
+        for (let i in list) {
             list[i] = list[i].replace(/(^\s+|\s+$)/g,'');
         }
         let guild = this.client.guilds.get(list[0]);
