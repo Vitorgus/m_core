@@ -7,7 +7,7 @@ module.exports = class sayCommand extends Command {
             group: 'other',
             memberName: 'talk',
             description: 'Mcore says the message in the specified server channel',
-            examples: ['mcore talk main-chat Hi there!'],
+            examples: ['mcore talk My server/main-chat/Hi there!'],
             args: [
                 {
                     key: 'text',
@@ -22,12 +22,10 @@ module.exports = class sayCommand extends Command {
     run(msg, { text }) {
         if (!this.client.online || (msg.author.id !== process.env.MAD && !this.client.isOwner(msg.author))) return;
         let list = text.split('/');
-        console.log(list);
         if (list.length != 3) return msg.say("There's something wrong. Make sure that the command argument is in the format guild/channel/text");
         for (let i in list) {
             list[i] = list[i].replace(/(^\s+|\s+$)/g,'');
         }
-        console.log(list);
         let guild = this.client.guilds.find("name", list[0]);
         if (!guild) return msg.say(`Could not find specified guild \`${guild}\``);
         let ch = guild.channels.find("name", list[1]);
