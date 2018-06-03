@@ -20,9 +20,9 @@ module.exports = class sayCommand extends Command {
     }
 
     run(msg, { text }) {
-        if (!this.client.online || msg.author.id !== process.env.MAD || !this.client.isOwner(msg.author)) return;
+        if (!this.client.online || (msg.author.id !== process.env.MAD && !this.client.isOwner(msg.author))) return;
         list = text.split('/');
-        if (list.length != 3) return msg.say("There's something wrong. Make sure that thecommand argument is in the format guild/channel/text");
+        if (list.length != 3) return msg.say("There's something wrong. Make sure that the command argument is in the format guild/channel/text");
         for (i in list) {
             list[i] = list[i].replace(/(^\s+|\s+$)/g,'');
         }
