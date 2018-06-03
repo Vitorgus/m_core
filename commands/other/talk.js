@@ -28,10 +28,10 @@ module.exports = class sayCommand extends Command {
             list[i] = list[i].replace(/(^\s+|\s+$)/g,'');
         }
         console.log(list);
-        let guild = this.client.guilds.get(list[0]);
-        if (!guild) return msg.say(`Could not find specified guild \´${guild}\´`);
-        let ch = guild.channels.get(list[1]);
-        if (!ch) return msg.say(`Coudn't find channel speficied channel \´${ch}\´ in the guild \´${guild}\´`);
+        let guild = this.client.guilds.find("name", list[0]);
+        if (!guild) return msg.say(`Could not find specified guild \`${guild}\``);
+        let ch = guild.channels.find("name", list[1]);
+        if (!ch) return msg.say(`Coudn't find channel speficied channel \`${ch}\` in the guild \`${guild}\``);
         return ch.send(list[2]);
     }
 };
