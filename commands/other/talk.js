@@ -22,10 +22,12 @@ module.exports = class sayCommand extends Command {
     run(msg, { text }) {
         if (!this.client.online || (msg.author.id !== process.env.MAD && !this.client.isOwner(msg.author))) return;
         let list = text.split('/');
+        console.log(list);
         if (list.length != 3) return msg.say("There's something wrong. Make sure that the command argument is in the format guild/channel/text");
         for (let i in list) {
             list[i] = list[i].replace(/(^\s+|\s+$)/g,'');
         }
+        console.log(list);
         let guild = this.client.guilds.get(list[0]);
         if (!guild) return msg.say(`Could not find specified guild \´${guild}\´`);
         let ch = guild.channels.get(list[1]);
