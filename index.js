@@ -1,12 +1,7 @@
 const path = require('path');                       //Gets the system path
 const Commando = require('discord.js-commando');    //Gets the commando library
 const token = process.env.TOKEN;       //Gets the SUPER SECRET BOT TOKEN from the hosting enviroment
-const Enmap = require('enmap');                     //Gets the enmap. Basically a simple database
 const replies = require('./replies.json');
-const reply = replies.default; //require('./msg_reply.json');
-const r_reply = replies.random; //require('./random_reply.json');
-const get_it = replies.get_it; //require('./get_it.json');
-const love = replies.love_you; //require('./love.json');
 
 //Initializing bot
 const bot = new Commando.Client({
@@ -16,8 +11,6 @@ const bot = new Commando.Client({
     unknownCommandResponse: false   // Disable the default unknown command response, So that it can reply with a random custom emoji later on the code
 });
 
-// TODO ttps://support.glitch.com/t/running-out-of-space-installing-ffmpeg-installer-ffmpeg/718
-
 /*
 Code that will be executed when the bot is initialized.
 It mostly just set some things and logs that the bot is online
@@ -26,14 +19,9 @@ bot.on('ready', () => {
     let pkg = require('./package.json');                                // Gets the package.json file
     console.log(`Starting ${pkg.name} v${pkg.version}...`);     // Outputs in the log that the bot has started
     bot.user.setStatus("idle");                                       // Sets bot status
-    //bot.user.setGame("JARVIS | jarvis help");
     bot.music = {};
     bot.reply = {};
     bot.online = false;
-    /*
-    bot.timed_function = null;
-    bot.random_reply = false;
-    */
     console.log("Logged in!");
 });
 
@@ -43,18 +31,9 @@ bot.on('unknownCommand', message => {
         emoji = message.guild.emojis.random();      // Gets a random custom emoji
         message.say(emoji.toString());              // Says the emoji in the chat
     }
-    /* THIS CODE IS JUST HERE TO REMIND ME THAT THE FOLOWING IS POSSIBLE
-    // Send an emoji:
-    const emoji = guild.emojis.first();
-    msg.reply(`Hello! ${emoji}`);
-    */
 });
 
 bot.on('message', message => {
-    /* THIS CODE IS JUST HERE TO REMIND ME THAT THE FOLOWING IS POSSIBLE
-    if (message.content == "alo") {
-        message.channel.send("<@291235973717688321><:red:362768065202618369>");
-    }*/
     if (!bot.online || !message.guild || message.guild.id === process.env.TEST_CHAT) return;
 
     if (!bot.reply[message.guild.id])
@@ -79,16 +58,14 @@ bot.on('message', message => {
     if (message.content.startsWith(bot.commandPrefix)) return;
 
     if (/you get it/gi.test(message.content)) {
-        return message.channel.send(get_it[Math.floor(Math.random() * get_it.length)]);
+        return message.channel.send(replies.get_it[Math.floor(Math.random() * replies.get_it.length)]);
         console.log("I got it!");
     }
     if (/I love you/gi.test(message.content)) {
-        return message.channel.send(love[Math.floor(Math.random() * love.length)]);
-        console.log("Sending love!");
+        return message.channel.send(replies.love_you[Math.floor(Math.random() * replies.love_you.length)]);
     }
     if (Math.random() <= 0.5) {
-        return message.channel.send(reply[Math.floor(Math.random() * reply.length)]);
-        console.log("Said something!");
+        return message.channel.send(replies.default[Math.floor(Math.random() * replies.default.length)]);
     }
 });
 
@@ -103,7 +80,7 @@ function randomReply(msg) {
         console.log("Message blocked!");
         return;
     }
-    msg.channel.send(r_reply[Math.floor(Math.random() * r_reply.length)]);
+    msg.channel.send(replies.random[Math.floor(Math.random() * replies.random.length)]);
     console.log("Just said something random!");
     setRandomReply(msg);
 }
@@ -113,18 +90,6 @@ function noReply(id) {
     bot.reply[id].timed_function = null;
     console.log("No more randomness!");
 }
-
-const http = require('http');
-const express = require('express');
-const app = express();
-app.get("/", (request, response) => {
-  console.log(Date.now() + " Ping Received");
-  response.sendStatus(200);
-});
-app.listen(process.env.PORT);
-setInterval(() => {
-  http.get(`http://${process.env.PROJECT_DOMAIN}.glitch.me/`);
-}, 280000);
 
 process.on('unhandledRejection', console.error);    // ...I guess this line is important, but I don't know why
 
