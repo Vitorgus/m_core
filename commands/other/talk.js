@@ -6,6 +6,7 @@ module.exports = class sayCommand extends Command {
             name: 'talk',
             group: 'other',
             memberName: 'talk',
+            hidden: true,
             description: 'Mcore says the message in the specified server channel',
             examples: ['mcore talk My server/main-chat/Hi there!'],
             args: [
