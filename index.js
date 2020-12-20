@@ -2,6 +2,20 @@ const path = require('path');                       //Gets the system path
 const Commando = require('discord.js-commando');    //Gets the commando library
 const token = process.env.TOKEN;       //Gets the SUPER SECRET BOT TOKEN from the hosting enviroment
 const replies = require('./replies.json');
+const n_reply = replies.default; //require('./msg_reply.json');
+const r_reply = replies.random; //require('./random_reply.json');
+const get_it = replies.get_it; //require('./get_it.json');
+const love = replies.love_you; //require('./love.json');
+
+// HTTP port so it doesn't sleep
+const express = require('express');
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => res.send('Hello World!'));
+
+app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`));
+// END
 
 //Initializing bot
 const bot = new Commando.Client({
@@ -58,14 +72,16 @@ bot.on('message', message => {
     if (message.content.startsWith(bot.commandPrefix)) return;
 
     if (/you get it/gi.test(message.content)) {
-        return message.channel.send(replies.get_it[Math.floor(Math.random() * replies.get_it.length)]);
+        return message.channel.send(get_it[Math.floor(Math.random() * get_it.length)]);
         console.log("I got it!");
     }
     if (/I love you/gi.test(message.content)) {
-        return message.channel.send(replies.love_you[Math.floor(Math.random() * replies.love_you.length)]);
+        return message.channel.send(love[Math.floor(Math.random() * love.length)]);
+        console.log("Sending love!");
     }
     if (Math.random() <= 0.5) {
-        return message.channel.send(replies.default[Math.floor(Math.random() * replies.default.length)]);
+        return message.channel.send(reply[Math.floor(Math.random() * n_reply.length)]);
+        console.log("Said something!");
     }
 });
 
@@ -80,7 +96,7 @@ function randomReply(msg) {
         console.log("Message blocked!");
         return;
     }
-    msg.channel.send(replies.random[Math.floor(Math.random() * replies.random.length)]);
+    msg.channel.send(r_reply[Math.floor(Math.random() * r_reply.length)]);
     console.log("Just said something random!");
     setRandomReply(msg);
 }
