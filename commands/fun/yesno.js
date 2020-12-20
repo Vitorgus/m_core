@@ -1,5 +1,5 @@
 const { Command } = require('discord.js-commando');
-const superagent = require('superagent');
+const axios = require('axios');
 
 module.exports = class yesnoCommand extends Command {
     constructor(client) {
@@ -8,17 +8,18 @@ module.exports = class yesnoCommand extends Command {
             group: 'fun',
             memberName: 'yesno',
             description: 'the bot responds yes or no.',
-            examples: [';<usage>']
+            examples: ['mcore yesno', 'mcore yesno are you a good bot?', 'mcore yesno are you sentient?']
         });
     }
 
-    run(msg, args) {
-        if (!this.client.online) return;
-        superagent
-        .get('https://yesno.wtf/api')
-        .end(function(err, res){
-            if (err) {console.log(err)};
-            if (res) {msg.say(res.body.image)};
-        });
+    async run(msg, args) {
+        //msg.channel.startTyping();
+        try {
+            const answer = await axios.get('https://yesno.wtf/api');
+            msg.say(answer.data.image);
+        } catch (e) {
+            msg.say("Whoops, coudn't find a yes or no gif, so... maybe?");
+            console.log(e);
+        }
     }
 };

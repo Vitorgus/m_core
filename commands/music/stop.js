@@ -11,19 +11,19 @@ module.exports = class stopCommand extends Command {
             ],
             group: 'music',
             memberName: 'stop',
-            description: 'Disconnects JARVIS from voice connection on the server',
-            examples: [';stop'],
+            description: 'Disconnects mcore from voice connection on the server',
+            examples: ['mcore stop', 'mcore stahp', 'mcore disconnect', 'mcore stfu'],
             guildOnly: true
         });
     }
 
     run(msg, args) {
-        if (!this.client.online) return;
-        let music = this.client.music[msg.guild.id] ;
-        if(!msg.guild.voiceConnection) return msg.say("I'm not connected to a Voice Channel!");
-        if (!music || !music.playing) return msg.say("No music is playing!");
-        music.queue.splice(0, music.queue.length);
-        msg.guild.voiceConnection.dispatcher.end("Stopped!");
-        console.log('Disconnected!');
+        const connection = msg.guild.voice ? msg.guild.voice.connection : null;
+        const member_channel = msg.member.voice.channel;
+
+        if (!connection) return msg.reply("I'm not even playing music right now!");
+        if (!member_channel || member_channel !== connection.channel) return msg.reply("you're not even in the voice channel I'm playing at!");
+
+        connection.dispatcher.end();
     }
 };

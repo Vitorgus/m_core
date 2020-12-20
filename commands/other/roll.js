@@ -7,7 +7,7 @@ module.exports = class rollCommand extends Command {
             group: 'other',
             memberName: 'roll',
             description: 'roll one die with x amount ofsides, or multiple dice using d20 syntax. Default value is 10',
-            examples: [';roll 6'],
+            examples: ['mcore roll 6', 'mcore roll 4', 'mcore roll 20'],
             args: [{
                 key: 'num',
                 prompt: 'How many sides on the die?',
@@ -17,8 +17,8 @@ module.exports = class rollCommand extends Command {
     }
 
     run(msg, { num }) {
-        if (!this.client.online) return;
-        var result = Math.floor((Math.random() * num));
-        return msg.say(msg.author + " rolled a " + result);
-    }
+    	// Verificar número menor que 1 e número em notação decimal
+        var result = Math.floor((Math.random() * num)) + 1;
+        return msg.say(`${msg.author} rolled a ${result}`);
+}
 };

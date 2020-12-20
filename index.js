@@ -41,8 +41,8 @@ bot.on('ready', () => {
 
 bot.on('unknownCommand', message => {
     if (!bot.online) return;
-    if (message.guild && message.guild.available && message.guild.emojis.size){
-        emoji = message.guild.emojis.random();      // Gets a random custom emoji
+    if (message.guild && message.guild.available && message.guild.emojis.cache.size){
+        emoji = message.guild.emojis.cache.random();      // Gets a random custom emoji
         message.say(emoji.toString());              // Says the emoji in the chat
     }
 });

@@ -1,9 +1,5 @@
 const { Command } = require('discord.js-commando');
-
-var youtube_node = require('youtube-node');
-youtube = new youtube_node();
-youtube.setKey(process.env.YOUTUBE_KEY);
-youtube.addParam('type', 'video');
+const ytsearch = require("../../common/ytsearch");
 
 module.exports = class youtubeCommand extends Command {
     constructor(client) {
@@ -12,7 +8,7 @@ module.exports = class youtubeCommand extends Command {
             group: 'search',
             memberName: 'youtube',
             description: 'gets youtube video matching the tags stated by the user',
-            examples: [';youtube'],
+            examples: ['mcore youtube mirror haus', 'mcore youtube adventure of a lifetime'],
             args: [{
                 key: 'tags',
                 prompt: 'What tags would you like to search for?',
@@ -21,20 +17,14 @@ module.exports = class youtubeCommand extends Command {
         });
     }
 
-    run(msg, args) {
-        if (!this.client.online) return;
-        const { tags } = args;
-        youtube.search(tags, 1, function(error, result) {
-            if (error) {
-                msg.say("¯\\_(ツ)_/¯");
-            }
-            else {
-                if (!result || !result.items || result.items.length < 1) {
-                    msg.say("¯\\_(ツ)_/¯");
-                } else {
-                    msg.say("http://www.youtube.com/watch?v=" + result.items[0].id.videoId );
-                }
-            }
-        });
+    async run(msg, { tags }) {
+        try {
+            const id = await ytsearch(tags);
+            if (!id) return msg.say(`Sorry ${msg.author}, but I didn't find any video when searching for \`${tags}\``);
+            msg.reply(`http://www.youtube.com/watch?v=${id}`);
+        } catch (e) {
+            msg.reply(`something went wrong. Coudn't complete the search \`${tags}\`: \`${e.message}\``)
+            console.log(e);
+        }
     }
 };
