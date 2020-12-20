@@ -2,7 +2,7 @@ const { Command } = require('discord.js-commando');
 
 var youtube_node = require('youtube-node');
 youtube = new youtube_node();
-youtube.setKey(process.env.YT_KEY);
+youtube.setKey(process.env.YOUTUBE_KEY);
 youtube.addParam('type', 'video');
 
 module.exports = class youtubeCommand extends Command {
